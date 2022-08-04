@@ -1,0 +1,25 @@
+logrus:
+  logLevel: info
+  # add the calling method as a field
+  reportCaller: true
+  disableColors: true
+  # log to file
+  enableFile: true
+  logFile: /tmp/ginServer.log
+
+gin:
+  ip: 127.0.0.1
+  port: 8888
+  mode: debug
+
+aws:
+  - ak: ak1
+    sk: sk1
+    region: region1
+    account: account_name1
+  - ak: ak2
+    sk: sk2
+    region: region2
+    account: account_name2
+
+
