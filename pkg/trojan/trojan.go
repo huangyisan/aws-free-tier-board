@@ -10,10 +10,15 @@ import (
 )
 
 type trojanClient struct {
+	tag                       string
 	ip                        string
 	port                      string
 	grpcClientConn            *grpc.ClientConn
 	trojanServerServiceClient service.TrojanServerServiceClient
+}
+
+func (t *trojanClient) setTag(tag string) {
+	t.tag = tag
 }
 
 func (t *trojanClient) setIp(ip string) {
@@ -50,7 +55,6 @@ func NewTrojanClient(ip, port string) *trojanClient {
 }
 
 func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic uint64) {
-
 	stream, err := t.trojanServerServiceClient.ListUsers(context.Background(), &service.ListUsersRequest{})
 	if err != nil {
 		panic(err)

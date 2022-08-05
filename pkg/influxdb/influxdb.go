@@ -25,8 +25,8 @@ func (i *influxClient) setAuthToken(authToken string) {
 	i.authToken = authToken
 }
 
-func (i *influxClient) setOrg(authToken string) {
-	i.authToken = authToken
+func (i *influxClient) setOrg(org string) {
+	i.org = org
 }
 
 func (i *influxClient) setBucket(bucket string) {
@@ -62,6 +62,10 @@ func (i *influxClient) Close() {
 }
 
 func MakeQuery(queryString string, args ...interface{}) string {
+	return fmt.Sprintf(queryString, args...)
+}
+
+func MakeLine(queryString string, args ...interface{}) string {
 	return fmt.Sprintf(queryString, args...)
 }
 

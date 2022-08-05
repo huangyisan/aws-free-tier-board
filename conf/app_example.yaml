@@ -27,5 +27,17 @@ trojan:
     ip: 1.1.1.1
     port: 1443
     password: dJhB4f4tVblYPUi
+  - tag: bc
+    ip: 2.2.2.2
+    port: 1444
+    password: dJhB4f4tVblYPUi
 
+influxDB:
+  url: "http://influxdb.com/"
+  authToken: asdfasdfasjdfasdjfajsdfj
+  org: rng
+  bucket: bbc
+
+app:
+  duration: 300
 
