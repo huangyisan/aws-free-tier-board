@@ -1,7 +1,7 @@
 package cost
 
 import (
-	"trojan-dashboard/aws/account"
+	"trojan-dashboard/app/aws/account"
 )
 
 type Client struct {

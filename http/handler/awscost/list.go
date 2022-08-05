@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"trojan-dashboard/aws/account"
-	"trojan-dashboard/aws/service/cost"
+	"trojan-dashboard/app/aws/account"
+	cost2 "trojan-dashboard/app/aws/service/cost"
 )
 
 var (
@@ -19,10 +19,10 @@ func List(c *gin.Context) {
 	end := "2022-08-01"
 
 	awsAccount := account.BuildAWSAccount(ak, sk, region)
-	client := cost.NewClient(awsAccount)
-	co := cost.NewCost(start, end)
+	client := cost2.NewClient(awsAccount)
+	co := cost2.NewCost(start, end)
 	//params := c.MonthlyEC2DataTransferOutCostAndUsageInput()
 	params := co.DailyEC2DataTransferOutCostAndUsageInput()
-	res := cost.GetCostAndUsage(client.AWSAccount.CeClient, context.Background(), params)
+	res := cost2.GetCostAndUsage(client.AWSAccount.CeClient, context.Background(), params)
 	c.JSON(http.StatusOK, res)
 }

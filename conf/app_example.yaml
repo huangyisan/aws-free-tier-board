@@ -22,4 +22,10 @@ aws:
     region: region2
     account: account_name2
 
+trojan:
+  - tag: sg
+    ip: 1.1.1.1
+    port: 1443
+    password: dJhB4f4tVblYPUi
+
 

@@ -24,3 +24,9 @@ var Aws []struct {
 	Sk string
 }
 
+type TrojanConfig struct {
+	Ip       string
+	Port     string
+	Tag      string
+	Password string
+}
