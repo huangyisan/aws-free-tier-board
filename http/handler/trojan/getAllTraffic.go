@@ -1,7 +1,6 @@
 package trojan
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"trojan-dashboard/pkg/common"
@@ -17,6 +16,5 @@ func GetAllTraffic(c *gin.Context) {
 		configs.InfluxDBConf.Org,
 		configs.InfluxDBConf.Bucket)
 	res := meTrojan.QueryAllTraffic(i, common.GetMonthFirstDay())
-	fmt.Printf("%v", res)
 	c.JSON(http.StatusOK, res)
 }
