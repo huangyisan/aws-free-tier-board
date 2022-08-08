@@ -12,6 +12,7 @@ import axios from "axios";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { PieChart } from "echarts/charts";
+import { BarChart } from "echarts/charts";
 import "echarts/lib/component/grid";
 import "echarts/lib/chart/line";
 import {
@@ -27,6 +28,7 @@ use([
   TitleComponent,
   TooltipComponent,
   LegendComponent,
+  BarChart,
 ]);
 
 export default {
@@ -44,15 +46,15 @@ export default {
       return {
         xAxis: {
           type: "category",
-          data: this.data.map((d) => d.date),
+          data: this.data.map((d) => d.tag),
         },
         yAxis: {
           type: "value",
         },
         series: [
           {
-            data: this.data.map((d) => d.usage),
-            type: "line",
+            data: this.data.map((d) => d.value),
+            type: "bar",
           },
         ],
       };
@@ -60,7 +62,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8888/v1/cost")
+      .get("http://127.0.0.1:8888/v1/traffic")
       .then((res) => {
         console.log(res.data);
         this.data = res.data;
