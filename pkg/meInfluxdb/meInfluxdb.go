@@ -1,4 +1,4 @@
-package influxdb
+package meInfluxdb
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"github.com/influxdata/influxdb-client-go/v2/api"
 )
 
-type influxClient struct {
+type InfluxClient struct {
 	url       string
 	authToken string
 	org       string
@@ -17,39 +17,43 @@ type influxClient struct {
 	queryAPI  api.QueryAPI
 }
 
-func (i *influxClient) setURL(url string) {
+func (i *InfluxClient) setURL(url string) {
 	i.url = url
 }
 
-func (i *influxClient) setAuthToken(authToken string) {
+func (i *InfluxClient) setAuthToken(authToken string) {
 	i.authToken = authToken
 }
 
-func (i *influxClient) setOrg(org string) {
+func (i *InfluxClient) setOrg(org string) {
 	i.org = org
 }
 
-func (i *influxClient) setBucket(bucket string) {
+func (i *InfluxClient) setBucket(bucket string) {
 	i.bucket = bucket
 }
 
-func (i *influxClient) setClient() {
+func (i *InfluxClient) GetBucket() string {
+	return i.bucket
+}
+
+func (i *InfluxClient) setClient() {
 	i.client = influxdb2.NewClient(i.url, i.authToken)
 }
 
-func (i *influxClient) setWriteApi() {
+func (i *InfluxClient) setWriteApi() {
 	i.writeApi = i.client.WriteAPI(i.org, i.bucket)
 }
 
-func (i *influxClient) setQueryApi() {
+func (i *InfluxClient) setQueryApi() {
 	i.queryAPI = i.client.QueryAPI(i.org)
 }
 
-func (i *influxClient) WriteLineRecord(line string) {
+func (i *InfluxClient) WriteLineRecord(line string) {
 	i.writeApi.WriteRecord(line)
 }
 
-func (i *influxClient) QueryRecord(cxt context.Context, query string) (*api.QueryTableResult, error) {
+func (i *InfluxClient) QueryRecord(cxt context.Context, query string) (*api.QueryTableResult, error) {
 	result, err := i.queryAPI.Query(cxt, query)
 	if err != nil {
 		return nil, err
@@ -57,7 +61,7 @@ func (i *influxClient) QueryRecord(cxt context.Context, query string) (*api.Quer
 	return result, nil
 }
 
-func (i *influxClient) Close() {
+func (i *InfluxClient) Close() {
 	i.client.Close()
 }
 
@@ -69,8 +73,8 @@ func MakeLine(queryString string, args ...interface{}) string {
 	return fmt.Sprintf(queryString, args...)
 }
 
-func NewInfluxDBClient(url, authToken, org, bucket string) *influxClient {
-	i := &influxClient{}
+func NewInfluxDBClient(url, authToken, org, bucket string) *InfluxClient {
+	i := &InfluxClient{}
 	i.setURL(url)
 	i.setAuthToken(authToken)
 	i.setOrg(org)

@@ -27,7 +27,3 @@ func listUsers(conn *grpc.ClientConn, c service.TrojanServerServiceClient) {
 		break
 	}
 }
-
-func PrintListUser() {
-	listUsers(NewHsClient())
-}

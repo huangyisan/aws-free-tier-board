@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"trojan-dashboard/http/handler/awscost"
+	"trojan-dashboard/http/handler/trojan"
 	"trojan-dashboard/http/router/middleware"
 )
 
@@ -17,9 +17,10 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "404 not found")
 	})
 
-	u := g.Group("/v1/cost")
+	u := g.Group("/v1/traffic")
 	{
-		u.GET("", awscost.List)
+		//u.GET("", awscost.List)
+		u.GET("", trojan.GetAllTraffic)
 	}
 	return g
 }

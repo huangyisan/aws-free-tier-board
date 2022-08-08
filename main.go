@@ -6,7 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"trojan-dashboard/http/router"
-	config2 "trojan-dashboard/pkg/config"
+	config2 "trojan-dashboard/pkg/configs"
 )
 
 func main() {

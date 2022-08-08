@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 	"trojan-dashboard/app/trojanTraffic"
-	myConfig "trojan-dashboard/pkg/config"
+	myConfig "trojan-dashboard/pkg/configs"
 )
 
 func main() {

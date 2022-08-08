@@ -1,12 +1,9 @@
-package trojan
+package meTrojan
 
 import (
-	"context"
 	"fmt"
 	"github.com/p4gefau1t/trojan-go/api/service"
 	"google.golang.org/grpc"
-	"io"
-	"log"
 )
 
 type trojanClient struct {
@@ -52,23 +49,4 @@ func NewTrojanClient(ip, port string) *trojanClient {
 	tc.setGrpcClientConn()
 	tc.setTrojanServerServiceClient()
 	return tc
-}
-
-func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic uint64) {
-	stream, err := t.trojanServerServiceClient.ListUsers(context.Background(), &service.ListUsersRequest{})
-	if err != nil {
-		panic(err)
-	}
-	for {
-		reply, err := stream.Recv()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Printf("faild to recv: %v", err)
-		}
-		downloadTraffic += reply.Status.TrafficTotal.DownloadTraffic
-		uploadTraffic += reply.Status.TrafficTotal.UploadTraffic
-	}
-	return
 }
