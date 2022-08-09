@@ -1,4 +1,4 @@
-package configs
+package logger
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"trojan-dashboard/pkg/configs"
 )
 
 var (
@@ -42,7 +43,7 @@ func (e *Msg) Msgf(detail string) {
 }
 
 func InitLog() {
-	r := LogrusConf
+	r := configs.LogrusConf
 	lvl, _ := logrus.ParseLevel(r.LogLevel)
 	logrus.SetLevel(lvl)
 	logrus.SetFormatter(&logrus.TextFormatter{

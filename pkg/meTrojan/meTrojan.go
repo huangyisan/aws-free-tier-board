@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/p4gefau1t/trojan-go/api/service"
 	"google.golang.org/grpc"
+	"trojan-dashboard/pkg/logger"
 )
 
 type trojanClient struct {
@@ -29,7 +30,7 @@ func (t *trojanClient) setPort(port string) {
 func (t *trojanClient) setGrpcClientConn() {
 	conn, err := grpc.Dial(fmt.Sprintf("%s:%s", t.ip, t.port), grpc.WithInsecure())
 	if err != nil {
-		panic(err)
+		logger.Failed.Msgf(err.Error())
 	}
 	t.grpcClientConn = conn
 }

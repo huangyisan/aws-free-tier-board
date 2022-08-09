@@ -3,6 +3,7 @@ package trojanTraffic
 import (
 	"sync"
 	myConfig "trojan-dashboard/pkg/configs"
+	"trojan-dashboard/pkg/logger"
 	"trojan-dashboard/pkg/meInfluxdb"
 	myTrojan "trojan-dashboard/pkg/meTrojan"
 )
@@ -27,7 +28,7 @@ func RecordTrojanTraffic() {
 			defer tc.Close()
 			downloadTraffic, uploadTraffic := tc.ListAllTraffic()
 			line := meInfluxdb.MakeLine("trojan,tag=%s,ip=%s download=%d,upload=%d", v.Tag, v.Ip, downloadTraffic/MB, uploadTraffic/MB)
-			myConfig.Success.Msgf(line)
+			logger.Success.Msgf(line)
 			infdb.WriteLineRecord(line)
 		}(v)
 	}

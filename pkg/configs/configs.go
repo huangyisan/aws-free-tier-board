@@ -27,7 +27,7 @@ func SetupConfig(cfgFile string) (*Setting, error) {
 
 func init() {
 	if err := initConfig(); err != nil {
-		Failed.Msgf(fmt.Sprintf("init app config failed %v", err))
+		panic(fmt.Sprintf("init app config failed %s", err.Error()))
 	}
 }
 

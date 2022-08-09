@@ -7,13 +7,14 @@ import (
 	"log"
 	"time"
 	"trojan-dashboard/pkg/common"
+	"trojan-dashboard/pkg/logger"
 	"trojan-dashboard/pkg/meInfluxdb"
 )
 
 func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic uint64) {
 	stream, err := t.trojanServerServiceClient.ListUsers(context.Background(), &service.ListUsersRequest{})
 	if err != nil {
-		panic(err)
+		logger.Failed.Msgf(err.Error())
 	}
 	for {
 		reply, err := stream.Recv()
@@ -35,7 +36,7 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryAllTra
 	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficQuery, i.GetBucket(), startTime)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
-		panic(err)
+		logger.Failed.Msgf(err.Error())
 	}
 	for result.Next() {
 		record := result.Record()
