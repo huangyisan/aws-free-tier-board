@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/p4gefau1t/trojan-go/api/service"
 	"io"
-	"log"
 	"time"
 	"trojan-dashboard/pkg/common"
 	"trojan-dashboard/pkg/logger"
@@ -15,6 +14,7 @@ func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic u
 	stream, err := t.trojanServerServiceClient.ListUsers(context.Background(), &service.ListUsersRequest{})
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
+		return 0, 0
 	}
 	for {
 		reply, err := stream.Recv()
@@ -22,7 +22,7 @@ func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic u
 			break
 		}
 		if err != nil {
-			log.Printf("faild to recv: %v", err)
+			logger.Failed.Msgf(err.Error())
 		}
 		downloadTraffic += reply.Status.TrafficTotal.DownloadTraffic
 		uploadTraffic += reply.Status.TrafficTotal.UploadTraffic
