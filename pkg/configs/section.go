@@ -1,10 +1,13 @@
 package configs
 
+import "time"
+
 var (
-	LogrusConf   *logrusConfig
-	GinConf      *ginConfig
-	TrojanConf   *TrojanConfig
-	InfluxDBConf *influxDBConfig
+	LogrusConf                 *logrusConfig
+	GinConf                    *ginConfig
+	TrojanConf                 *TrojanConfig
+	InfluxDBConf               *influxDBConfig
+	TrojanTrafficCollectorConf *trojanTrafficCollectorConfig
 )
 
 type logrusConfig struct {
@@ -40,4 +43,8 @@ type influxDBConfig struct {
 	AuthToken string
 	Org       string
 	Bucket    string
+}
+
+type trojanTrafficCollectorConfig struct {
+	Duration time.Duration
 }

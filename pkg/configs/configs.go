@@ -62,6 +62,11 @@ func initConfig() error {
 		return err
 	}
 
+	err = setting.SetConf("trojanTrafficCollector", &TrojanTrafficCollectorConf)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
