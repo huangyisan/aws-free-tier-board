@@ -9,7 +9,7 @@ import (
 func main() {
 	myConfig.InitLog()
 	for {
-		<-time.Tick(time.Second * 300)
+		<-time.Tick(time.Second * myConfig.TrojanTrafficCollectorConf.Duration)
 		trojanTraffic.RecordTrojanTraffic()
 	}
 
