@@ -28,3 +28,13 @@ func GetTrafficByTag(c *gin.Context) {
 	res := meTrojan.QueryTrafficByTag(i, common.GetMonthFirstDay(), c.Param("tag"))
 	c.JSON(http.StatusOK, res)
 }
+
+func GetTrafficByGroup(c *gin.Context) {
+	i := meInfluxdb.NewInfluxDBClient(
+		configs.InfluxDBConf.Url,
+		configs.InfluxDBConf.AuthToken,
+		configs.InfluxDBConf.Org,
+		configs.InfluxDBConf.Bucket)
+	res := meTrojan.QueryTrafficByGroup(i, common.GetMonthFirstDay(), c.Param("group"))
+	c.JSON(http.StatusOK, res)
+}

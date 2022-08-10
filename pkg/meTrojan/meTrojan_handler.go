@@ -43,6 +43,7 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryTraffi
 		results = append(results, queryTrafficResponse{
 			Time:  record.Time().Format(time.RFC3339),
 			Tag:   record.ValueByKey("tag").(string),
+			Group: record.ValueByKey("group").(string),
 			Ip:    record.ValueByKey("ip").(string),
 			Value: record.ValueByKey("total").(float64),
 		})
@@ -63,6 +64,28 @@ func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, tag string) []quer
 		results = append(results, queryTrafficResponse{
 			Time:  record.Time().Format(time.RFC3339),
 			Tag:   record.ValueByKey("tag").(string),
+			Group: record.ValueByKey("group").(string),
+			Ip:    record.ValueByKey("ip").(string),
+			Value: record.ValueByKey("total").(float64),
+		})
+	}
+	return results
+}
+
+func QueryTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, group string) []queryTrafficResponse {
+	defer i.Close()
+	var results []queryTrafficResponse
+	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByGroup, i.GetBucket(), startTime, group)
+	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
+	if err != nil {
+		logger.Failed.Msgf(err.Error())
+	}
+	for result.Next() {
+		record := result.Record()
+		results = append(results, queryTrafficResponse{
+			Time:  record.Time().Format(time.RFC3339),
+			Tag:   record.ValueByKey("tag").(string),
+			Group: record.ValueByKey("group").(string),
 			Ip:    record.ValueByKey("ip").(string),
 			Value: record.ValueByKey("total").(float64),
 		})
@@ -73,6 +96,7 @@ func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, tag string) []quer
 type queryTrafficResponse struct {
 	Time  string  `json:"time"`
 	Tag   string  `json:"tag"`
+	Group string  `json:"group"`
 	Ip    string  `json:"ip"`
 	Value float64 `json:"value"`
 }
