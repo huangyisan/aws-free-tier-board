@@ -15,7 +15,9 @@ func GetAllTraffic(c *gin.Context) {
 		configs.InfluxDBConf.AuthToken,
 		configs.InfluxDBConf.Org,
 		configs.InfluxDBConf.Bucket)
-	res := meTrojan.QueryAllTraffic(i, common.FormatDateToRFC3339("2022-08-10"), common.FormatDateToRFC3339("2022-08-11"))
+	startTime := c.DefaultQuery("start", common.GetMonthFirstDay())
+	endTime := c.DefaultQuery("end", common.GetCurrentDay())
+	res := meTrojan.QueryAllTraffic(i, startTime, endTime)
 	c.JSON(http.StatusOK, res)
 }
 

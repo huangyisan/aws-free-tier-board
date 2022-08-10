@@ -105,7 +105,7 @@ func GetMonthFirstDay() string {
 
 }
 
-func GetCurrentDay() time.Time {
+func GetCurrentDay() string {
 	now := time.Now()
-	return now
+	return now.Format(time.RFC3339)
 }

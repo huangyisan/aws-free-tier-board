@@ -62,6 +62,21 @@ export default {
   methods: {
     submitDate() {
       console.log(this.dates);
+      axios({
+        method: "GET",
+        url: "http://127.0.0.1:8888/v1/traffic",
+        params: {
+          start: this.dates[0],
+          end: this.dates[1],
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.data = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
   data() {
@@ -93,8 +108,15 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get("http://127.0.0.1:8888/v1/traffic")
+    setDatesRange(this.dates);
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:8888/v1/traffic",
+      params: {
+        start: this.dates[0],
+        end: this.dates[1],
+      },
+    })
       .then((res) => {
         console.log(res.data);
         this.data = res.data;
@@ -102,18 +124,27 @@ export default {
       .catch((err) => {
         console.error(err);
       });
+    // axios
+    //   .get("http://127.0.0.1:8888/v1/traffic")
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     this.data = res.data;
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
 
     //
-    setDatesRange(this.dates);
+    // setDatesRange(this.dates);
   },
 };
 
 function setDatesRange(dates) {
   let today = new Date();
   today = dateformat(today, "yyyy-mm-dd");
-  let yesterday = new Date().setDate(new Date().getDate() - 1);
-  yesterday = dateformat(yesterday, "yyyy-mm-dd");
-  dates.push(yesterday, today);
+  let tomorrow = new Date().setDate(new Date().getDate() + 1);
+  tomorrow = dateformat(tomorrow, "yyyy-mm-dd");
+  dates.push(today, tomorrow);
 }
 </script>
 
