@@ -11,40 +11,42 @@ var (
 )
 
 type logrusConfig struct {
-	LogLevel      string
-	LogFile       string
-	ReportCaller  bool
-	DisableColors bool
-	EnableFile    bool
+	LogLevel      string `yaml:"logLevel"`
+	LogFile       string `yaml:"logFile"`
+	ReportCaller  bool   `yaml:"reportCaller"`
+	DisableColors bool   `yaml:"disableColors"`
+	EnableFile    bool   `yaml:"enableFile"`
 }
 
 type ginConfig struct {
-	Ip   string
-	Port string
-	Mode string
+	Ip   string `yaml:"ip"`
+	Port string `yaml:"port"`
+	Mode string `yaml:"mode"`
 }
 
 var Aws []struct {
-	Ak string
-	Sk string
+	Ak      string `yaml:"ak"`
+	Sk      string `yaml:"sk"`
+	Region  string `yaml:"region"`
+	Account string `yaml:"account"`
 }
 
 type TrojanConfig []OneTrojanConfig
 
 type OneTrojanConfig struct {
-	Ip       string
-	Port     string
-	Tag      string
-	Password string
+	Ip    string `yaml:"ip"`
+	Port  string `yaml:"port"`
+	Tag   string `yaml:"tag"`
+	Group string `yaml:"group"`
 }
 
 type influxDBConfig struct {
-	Url       string
-	AuthToken string
-	Org       string
-	Bucket    string
+	Url       string `yaml:"url"`
+	AuthToken string `yaml:"authToken"`
+	Org       string `yaml:"org"`
+	Bucket    string `yaml:"bucket"`
 }
 
 type trojanTrafficCollectorConfig struct {
-	Duration time.Duration
+	Duration time.Duration `yaml:"duration"`
 }

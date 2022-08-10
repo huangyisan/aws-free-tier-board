@@ -19,8 +19,10 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 	u := g.Group("/v1/traffic")
 	{
-		//u.GET("", awscost.List)
-		u.GET("", trojan.GetAllTraffic)
+
+		u.GET("servers", trojan.GetAllTraffic)
+		u.GET("servers/:tag", trojan.GetTrafficByTag)
+
 	}
 	return g
 }

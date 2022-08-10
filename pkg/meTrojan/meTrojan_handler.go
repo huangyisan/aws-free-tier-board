@@ -30,9 +30,9 @@ func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic u
 	return
 }
 
-func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryAllTrafficResponse {
+func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryTrafficResponse {
 	defer i.Close()
-	var results []queryAllTrafficResponse
+	var results []queryTrafficResponse
 	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficQuery, i.GetBucket(), startTime)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
@@ -40,7 +40,7 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryAllTra
 	}
 	for result.Next() {
 		record := result.Record()
-		results = append(results, queryAllTrafficResponse{
+		results = append(results, queryTrafficResponse{
 			Time:  record.Time().Format(time.RFC3339),
 			Tag:   record.ValueByKey("tag").(string),
 			Ip:    record.ValueByKey("ip").(string),
@@ -50,7 +50,27 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryAllTra
 	return results
 }
 
-type queryAllTrafficResponse struct {
+func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, tag string) []queryTrafficResponse {
+	defer i.Close()
+	var results []queryTrafficResponse
+	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByTag, i.GetBucket(), startTime, tag)
+	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
+	if err != nil {
+		logger.Failed.Msgf(err.Error())
+	}
+	for result.Next() {
+		record := result.Record()
+		results = append(results, queryTrafficResponse{
+			Time:  record.Time().Format(time.RFC3339),
+			Tag:   record.ValueByKey("tag").(string),
+			Ip:    record.ValueByKey("ip").(string),
+			Value: record.ValueByKey("total").(float64),
+		})
+	}
+	return results
+}
+
+type queryTrafficResponse struct {
 	Time  string  `json:"time"`
 	Tag   string  `json:"tag"`
 	Ip    string  `json:"ip"`
