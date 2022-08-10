@@ -33,7 +33,7 @@ func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic u
 func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficQuery, i.GetBucket(), startTime)
+	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTraffic, i.GetBucket(), startTime)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
@@ -45,6 +45,27 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryTraffi
 			Tag:   record.ValueByKey("tag").(string),
 			Group: record.ValueByKey("group").(string),
 			Ip:    record.ValueByKey("ip").(string),
+			Value: record.ValueByKey("total").(float64),
+		})
+	}
+	return results
+}
+
+func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime string) []queryTrafficResponse {
+	defer i.Close()
+	var results []queryTrafficResponse
+	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficByGroup, i.GetBucket(), startTime)
+	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
+	if err != nil {
+		logger.Failed.Msgf(err.Error())
+	}
+	for result.Next() {
+		record := result.Record()
+		results = append(results, queryTrafficResponse{
+			Time:  record.Time().Format(time.RFC3339),
+			Tag:   "",
+			Group: record.ValueByKey("group").(string),
+			Ip:    "",
 			Value: record.ValueByKey("total").(float64),
 		})
 	}

@@ -23,6 +23,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		u.GET("servers", trojan.GetAllTraffic)
 		u.GET("servers/tag/:tag", trojan.GetTrafficByTag)
 		u.GET("servers/group/:group", trojan.GetTrafficByGroup)
+		u.GET("servers/group", trojan.GetAllTrafficByGroup)
 
 	}
 	return g
