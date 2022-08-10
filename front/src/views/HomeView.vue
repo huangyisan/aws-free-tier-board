@@ -1,7 +1,28 @@
 <template>
   <div class="about">
     <h1>This is home page</h1>
-    <v-chart class="chart" :option="option" />
+    <div>
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-date-picker v-model="dates" range></v-date-picker>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-text-field
+            v-model="dateRangeText"
+            label="Date range"
+            prepend-icon="mdi-calendar"
+            readonly
+          ></v-text-field>
+          model: {{ dates }}
+        </v-col>
+      </v-row>
+    </div>
+    <div>
+      <v-btn block color="primary" @click="submitDate"> Block Button </v-btn>
+    </div>
+    <div>
+      <v-chart class="chart" :option="option" />
+    </div>
   </div>
 </template>
 
@@ -36,9 +57,20 @@ export default {
   components: {
     VChart,
   },
+  methods: {
+    submitDate() {
+      console.log(this.dates);
+    },
+  },
+  computed: {
+    dateRangeText() {
+      return this.dates.join(" ~ ");
+    },
+  },
   name: "Cost",
   data() {
     return {
+      dates: ["2019-09-10", "2019-09-20"],
       option: {
         title: {
           text: "Stacked Line",

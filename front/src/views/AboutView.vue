@@ -1,12 +1,35 @@
 <template>
   <div class="about">
     <h1>This is cost page</h1>
-    <v-chart class="chart" :option="option" />
+    <div>
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-date-picker v-model="dates" range></v-date-picker>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-text-field
+            v-model="dateRangeText"
+            label="Date range"
+            prepend-icon="mdi-calendar"
+            readonly
+          ></v-text-field>
+          model: {{ dates }}
+        </v-col>
+      </v-row>
+    </div>
+    <div>
+      <v-btn block color="primary" @click="submitDate"> Block Button </v-btn>
+    </div>
+    <div>
+      <v-chart class="chart" :option="option" />
+    </div>
   </div>
 </template>
 
 <script>
+// import dateFormat from "./tools.js";
 import axios from "axios";
+import dateformat from "dateformat";
 // import VChart from "vue-echarts";
 
 import { use } from "echarts/core";
@@ -36,12 +59,21 @@ export default {
     VChart,
   },
   name: "Cost",
+  methods: {
+    submitDate() {
+      console.log(this.dates);
+    },
+  },
   data() {
     return {
+      dates: [],
       data: [],
     };
   },
   computed: {
+    dateRangeText() {
+      return this.dates.join(" ~ ");
+    },
     option() {
       return {
         xAxis: {
@@ -70,8 +102,19 @@ export default {
       .catch((err) => {
         console.error(err);
       });
+
+    //
+    setDatesRange(this.dates);
   },
 };
+
+function setDatesRange(dates) {
+  let today = new Date();
+  today = dateformat(today, "yyyy-mm-dd");
+  let yesterday = new Date().setDate(new Date().getDate() - 1);
+  yesterday = dateformat(yesterday, "yyyy-mm-dd");
+  dates.push(yesterday, today);
+}
 </script>
 
 <style scoped>
