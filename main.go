@@ -7,11 +7,12 @@ import (
 	"net/http"
 	"trojan-dashboard/http/router"
 	config2 "trojan-dashboard/pkg/configs"
+	"trojan-dashboard/pkg/logger"
 )
 
 func main() {
 	// init logger
-	config2.InitLog()
+	logger.InitLog()
 	aws := config2.Aws
 	for _, v := range aws {
 		fmt.Println(v)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/aws/aws-sdk-go-v2/service/costexplorer"
 	"github.com/aws/aws-sdk-go-v2/service/costexplorer/types"
+	"trojan-dashboard/pkg/logger"
 )
 
 type Cost struct {
@@ -60,7 +61,7 @@ func GetCostAndUsage(CC costHandler, ctx context.Context, params *costexplorer.G
 	var usageInfos []UsageInfo
 	res, err := CC.GetCostAndUsage(ctx, params)
 	if err != nil {
-		panic(err)
+		logger.Failed.Msgf(err.Error())
 	}
 
 	for _, v := range res.ResultsByTime {

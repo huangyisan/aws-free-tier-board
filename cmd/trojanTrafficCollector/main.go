@@ -4,13 +4,14 @@ import (
 	"time"
 	"trojan-dashboard/app/trojanTraffic"
 	myConfig "trojan-dashboard/pkg/configs"
+	"trojan-dashboard/pkg/logger"
 )
 
 func main() {
-	myConfig.InitLog()
+	logger.InitLog()
 	for {
-		<-time.Tick(time.Second * 300)
 		trojanTraffic.RecordTrojanTraffic()
+		<-time.Tick(time.Second * myConfig.TrojanTrafficCollectorConf.Duration)
 	}
 
 }

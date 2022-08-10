@@ -17,10 +17,23 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "404 not found")
 	})
 
-	u := g.Group("/v1/traffic")
+	traffic := g.Group("/v1/traffic")
 	{
-		//u.GET("", awscost.List)
-		u.GET("", trojan.GetAllTraffic)
+
+		traffic.GET("", trojan.GetAllTraffic)
+		traffic.GET("tag/:tag", trojan.GetTrafficByTag)
+		traffic.GET("group/:group", trojan.GetTrafficByGroup)
+		traffic.GET("group", trojan.GetAllTrafficByGroup)
+
 	}
+
+	servers := g.Group("/v1/servers")
+	{
+		servers.GET("", trojan.ListServer)
+		servers.GET("tag", trojan.ListServerTag)
+		servers.GET("group", trojan.ListServerGroup)
+		servers.GET("group/:group", trojan.ListServerByGroup)
+	}
+
 	return g
 }

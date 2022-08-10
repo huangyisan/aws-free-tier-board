@@ -23,14 +23,22 @@ aws:
     account: account_name2
 
 trojan:
-  - tag: sg
+  - tag: sg01
     ip: 1.1.1.1
     port: 1443
-    password: dJhB4f4tVblYPUi
-  - tag: bc
+    group: sg
+  - tag: sg02
+    ip: 1.1.1.1
+    port: 1443
+    group: sg
+  - tag: bc01
     ip: 2.2.2.2
     port: 1444
-    password: dJhB4f4tVblYPUi
+    group: bc
+  - tag: bc02
+    ip: 2.2.2.2
+    port: 1444
+    group: bc
 
 influxDB:
   url: "http://influxdb.com/"
