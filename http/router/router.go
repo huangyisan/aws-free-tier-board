@@ -32,6 +32,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		servers.GET("", trojan.ListServer)
 		servers.GET("tag", trojan.ListServerTag)
 		servers.GET("group", trojan.ListServerGroup)
+		servers.GET("group/:group", trojan.ListServerByGroup)
 	}
+
 	return g
 }

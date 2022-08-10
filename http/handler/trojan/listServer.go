@@ -20,12 +20,12 @@ func ListServer(c *gin.Context) {
 
 // 列出所有server tag
 func ListServerTag(c *gin.Context) {
-	sl := make([]string, 0)
+	tags := make([]string, 0)
 	tjc := configs.TrojanConf
 	for _, v := range *tjc {
-		sl = append(sl, v.Tag)
+		tags = append(tags, v.Tag)
 	}
-	c.JSON(http.StatusOK, sl)
+	c.JSON(http.StatusOK, tags)
 }
 
 // 列出所有server group
@@ -36,6 +36,18 @@ func ListServerGroup(c *gin.Context) {
 		gp = append(gp, v.Group)
 	}
 	c.JSON(http.StatusOK, gp)
+}
+
+// 根据给定group信息列出该group中所有tag
+func ListServerByGroup(c *gin.Context) {
+	tags := make([]string, 0)
+	tjc := configs.TrojanConf
+	for _, v := range *tjc {
+		if v.Group == c.Param("group") {
+			tags = append(tags, v.Tag)
+		}
+	}
+	c.JSON(http.StatusOK, tags)
 }
 
 type server struct {
