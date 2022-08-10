@@ -5,7 +5,6 @@ import (
 	"fmt"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"testing"
-	"trojan-dashboard/pkg/common"
 	"trojan-dashboard/pkg/meInfluxdb"
 )
 
@@ -54,12 +53,13 @@ func Test_influxdb(t *testing.T) {
 
 }
 
-func Test_cc(t *testing.T) {
-	i := meInfluxdb.NewInfluxDBClient(
-		"http://abc/",
-		"cc",
-		"qz",
-		"qz")
-	a := QueryAllTraffic(i, common.GetMonthFirstDay())
-	fmt.Printf("%v\n", a)
-}
+//
+//func Test_cc(t *testing.T) {
+//	i := meInfluxdb.NewInfluxDBClient(
+//		"http://abc/",
+//		"cc",
+//		"qz",
+//		"qz")
+//	a := QueryAllTraffic(i, common.GetMonthFirstDay())
+//	fmt.Printf("%v\n", a)
+//}

@@ -30,10 +30,10 @@ func (t *trojanClient) ListAllTraffic() (downloadTraffic uint64, uploadTraffic u
 	return
 }
 
-func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime string) []queryTrafficResponse {
+func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime, stopTime string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTraffic, i.GetBucket(), startTime)
+	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTraffic, i.GetBucket(), startTime, stopTime)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
