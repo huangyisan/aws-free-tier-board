@@ -57,7 +57,7 @@ export default {
   components: {
     VChart,
   },
-  name: "Cost",
+  name: "trojanTraffic",
   methods: {
     genXAxisData(d) {
       return d.tag;
