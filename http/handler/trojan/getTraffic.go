@@ -27,7 +27,9 @@ func GetAllTrafficByGroup(c *gin.Context) {
 		configs.InfluxDBConf.AuthToken,
 		configs.InfluxDBConf.Org,
 		configs.InfluxDBConf.Bucket)
-	res := meTrojan.QueryAllTrafficByGroup(i, common.GetMonthFirstDay())
+	startTime := c.DefaultQuery("start", common.GetMonthFirstDay())
+	endTime := c.DefaultQuery("end", common.GetCurrentDay())
+	res := meTrojan.QueryAllTrafficByGroup(i, startTime, endTime)
 	c.JSON(http.StatusOK, res)
 
 }
