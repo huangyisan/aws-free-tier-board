@@ -60,8 +60,33 @@ export default {
   },
   name: "Cost",
   methods: {
+    getAllTraffic(dates, data) {
+      axios({
+        method: "GET",
+        url: "http://127.0.0.1:8888/v1/traffic",
+        params: {
+          start: dates[0],
+          end: dates[1],
+        },
+      })
+        .then((res) => {
+          this.data = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+
+    setDatesRange(dates) {
+      let today = new Date();
+      today = dateformat(today, "yyyy-mm-dd");
+      let tomorrow = new Date().setDate(new Date().getDate() + 1);
+      tomorrow = dateformat(tomorrow, "yyyy-mm-dd");
+      this.dates.push(today, tomorrow);
+    },
+
     submitDate() {
-      console.log(this.dates);
+      this.dates.sort();
       axios({
         method: "GET",
         url: "http://127.0.0.1:8888/v1/traffic",
@@ -71,8 +96,8 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
           this.data = res.data;
+          this.option;
         })
         .catch((err) => {
           console.error(err);
@@ -108,44 +133,10 @@ export default {
     },
   },
   mounted() {
-    setDatesRange(this.dates);
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:8888/v1/traffic",
-      params: {
-        start: this.dates[0],
-        end: this.dates[1],
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        this.data = res.data;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    // axios
-    //   .get("http://127.0.0.1:8888/v1/traffic")
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     this.data = res.data;
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-
-    //
-    // setDatesRange(this.dates);
+    this.setDatesRange(this.dates);
+    this.getAllTraffic(this.dates, this.data);
   },
 };
-
-function setDatesRange(dates) {
-  let today = new Date();
-  today = dateformat(today, "yyyy-mm-dd");
-  let tomorrow = new Date().setDate(new Date().getDate() + 1);
-  tomorrow = dateformat(tomorrow, "yyyy-mm-dd");
-  dates.push(today, tomorrow);
-}
 </script>
 
 <style scoped>
