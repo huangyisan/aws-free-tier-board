@@ -51,10 +51,10 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime, stopTime string) []q
 	return results
 }
 
-func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime string) []queryTrafficResponse {
+func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficByGroup, i.GetBucket(), startTime)
+	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficByGroup, i.GetBucket(), startTime, stopTime)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())

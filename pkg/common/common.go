@@ -29,13 +29,13 @@ var (
 
 	AllTrafficByGroup = `import "math"
 		last_traffic = from(bucket: "%[1]v") 
-			|> range(start: %[2]v)
+			|> range(start: %[2]v, stop: %[3]v)
 			|> filter(fn: (r) => r["_measurement"] == "trojan") 
 			|> filter(fn: (r) => r["_field"] == "download" or r["_field"] == "upload") 
 			|> last(column: "_time")
 		// last_traffic
 		first_traffic = from(bucket: "%[1]v") 
-			|> range(start: %[2]v)
+			|> range(start: %[2]v, stop: %[3]v)
 			|> filter(fn: (r) => r["_measurement"] == "trojan") 
 			|> filter(fn: (r) => r["_field"] == "download" or r["_field"] == "upload") 
 			|> first(column: "_time")
