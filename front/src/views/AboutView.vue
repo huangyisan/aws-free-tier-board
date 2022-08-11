@@ -3,10 +3,10 @@
     <h1>This is cost page</h1>
     <div>
       <v-row>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" sm="12">
           <v-date-picker v-model="dates" range></v-date-picker>
         </v-col>
-        <v-col cols="12" sm="6">
+        <!-- <v-col cols="12" sm="6">
           <v-text-field
             v-model="dateRangeText"
             label="Date range"
@@ -14,7 +14,7 @@
             readonly
           ></v-text-field>
           model: {{ dates }}
-        </v-col>
+        </v-col> -->
       </v-row>
     </div>
     <div>
@@ -60,7 +60,14 @@ export default {
   },
   name: "Cost",
   methods: {
-    getAllTraffic(dates, data) {
+    genXAxisData(d) {
+      return d.tag;
+    },
+    genYAxisData(d) {
+      return d.value;
+    },
+    getAllTraffic(dates) {
+      dates.sort();
       axios({
         method: "GET",
         url: "http://127.0.0.1:8888/v1/traffic",
@@ -70,7 +77,17 @@ export default {
         },
       })
         .then((res) => {
-          this.data = res.data;
+          // console.log("request:", res.data);
+          if (res.data !== null) {
+            this.data = res.data;
+          } else {
+            this.data = [
+              {
+                tag: "null",
+                value: 0,
+              },
+            ];
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -86,22 +103,7 @@ export default {
     },
 
     submitDate() {
-      this.dates.sort();
-      axios({
-        method: "GET",
-        url: "http://127.0.0.1:8888/v1/traffic",
-        params: {
-          start: this.dates[0],
-          end: this.dates[1],
-        },
-      })
-        .then((res) => {
-          this.data = res.data;
-          this.option;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      this.getAllTraffic(this.dates);
     },
   },
   data() {
@@ -118,14 +120,16 @@ export default {
       return {
         xAxis: {
           type: "category",
-          data: this.data.map((d) => d.tag),
+          // data: this.data.map((d) => (d ? d.tag : "")),
+          data: this.data.map(this.genXAxisData, this.data),
         },
         yAxis: {
           type: "value",
         },
         series: [
           {
-            data: this.data.map((d) => d.value),
+            data: this.data.map(this.genYAxisData, this.data),
+            // data: this.genYAxisData(this.data),
             type: "bar",
           },
         ],
@@ -134,7 +138,7 @@ export default {
   },
   mounted() {
     this.setDatesRange(this.dates);
-    this.getAllTraffic(this.dates, this.data);
+    this.getAllTraffic(this.dates);
   },
 };
 </script>
