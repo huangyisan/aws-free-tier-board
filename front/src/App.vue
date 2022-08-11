@@ -4,6 +4,7 @@
       <!--  -->
       <v-list rounded>
         <v-subheader>Cost Report</v-subheader>
+        <v-list-item-group> </v-list-item-group>
         <v-list-item-group v-model="selectedItem" color="primary">
           <v-list-item v-for="(item, i) in items" :key="i" link :to="item.to">
             <v-list-item-icon>
@@ -40,7 +41,7 @@ export default {
     selectedItem: 1,
     items: [
       { text: "home", icon: "mdi-home", to: "/" },
-      { text: "awsCost", icon: "mdi-currency-usd", to: "about" },
+      { text: "Trojan Traffic", icon: "mdi-wan", to: "trojanTraffic" },
     ],
   }),
 };
