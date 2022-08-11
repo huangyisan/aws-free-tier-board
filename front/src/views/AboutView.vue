@@ -3,10 +3,18 @@
     <!-- <h1>This is cost page</h1> -->
     <div>
       <v-row justify="center">
-        <v-col cols="12" sm="12">
-          <v-date-picker full-width v-model="dates" range></v-date-picker>
+        <v-col cols="12" sm="5" class="mt-2">
+          <v-date-picker v-model="dates" range></v-date-picker>
         </v-col>
-        <v-col cols="12" sm="12">
+        <v-col cols="12" sm="5" class="mt-2">
+          <v-text-field
+            v-model="dateRangeText"
+            label="Date range"
+            prepend-icon="mdi-calendar"
+            readonly
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="10" class="mt-2">
           <v-btn block color="primary" @click="submitDate">
             Block Button
           </v-btn>
