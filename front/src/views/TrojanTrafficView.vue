@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <!-- <h1>This is cost page</h1> -->
+    <!-- <h1>This is traffic page</h1> -->
     <div>
       <v-row justify="center">
         <v-col cols="12" sm="5" class="mt-2">

@@ -40,7 +40,7 @@ export default {
     selectedItem: 1,
     items: [
       { text: "home", icon: "mdi-home", to: "/" },
-      { text: "awsCost", icon: "mdi-currency-usd", to: "about" },
+      { text: "Trojan Traffic", icon: "mdi-wan", to: "about" },
     ],
   }),
 };
