@@ -1,26 +1,17 @@
 <template>
   <div class="about">
-    <h1>This is cost page</h1>
+    <!-- <h1>This is cost page</h1> -->
     <div>
-      <v-row>
+      <v-row justify="center">
         <v-col cols="12" sm="12">
-          <v-date-picker v-model="dates" range></v-date-picker>
+          <v-date-picker full-width v-model="dates" range></v-date-picker>
         </v-col>
-        <!-- <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="dateRangeText"
-            label="Date range"
-            prepend-icon="mdi-calendar"
-            readonly
-          ></v-text-field>
-          model: {{ dates }}
-        </v-col> -->
+        <v-col cols="12" sm="12">
+          <v-btn block color="primary" @click="submitDate">
+            Block Button
+          </v-btn>
+        </v-col>
       </v-row>
-    </div>
-    <div>
-      <v-btn block color="primary" @click="submitDate"> Block Button </v-btn>
-    </div>
-    <div>
       <v-chart class="chart" :option="option" />
     </div>
   </div>
@@ -77,7 +68,6 @@ export default {
         },
       })
         .then((res) => {
-          // console.log("request:", res.data);
           if (res.data !== null) {
             this.data = res.data;
           } else {
@@ -120,16 +110,14 @@ export default {
       return {
         xAxis: {
           type: "category",
-          // data: this.data.map((d) => (d ? d.tag : "")),
-          data: this.data.map(this.genXAxisData, this.data),
+          data: this.data.map((d) => d.tag),
         },
         yAxis: {
           type: "value",
         },
         series: [
           {
-            data: this.data.map(this.genYAxisData, this.data),
-            // data: this.genYAxisData(this.data),
+            data: this.data.map((d) => d.value),
             type: "bar",
           },
         ],
