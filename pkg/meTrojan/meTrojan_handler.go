@@ -41,11 +41,12 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime, stopTime string) []q
 	for result.Next() {
 		record := result.Record()
 		results = append(results, queryTrafficResponse{
-			Time:  record.Time().Format(time.RFC3339),
-			Tag:   record.ValueByKey("tag").(string),
-			Group: record.ValueByKey("group").(string),
-			Ip:    record.ValueByKey("ip").(string),
-			Value: record.ValueByKey("total").(float64),
+			Time:     record.Time().Format(time.RFC3339),
+			Tag:      record.ValueByKey("tag").(string),
+			Group:    record.ValueByKey("group").(string),
+			Ip:       record.ValueByKey("ip").(string),
+			Download: record.ValueByKey("download").(float64),
+			Upload:   record.ValueByKey("upload").(float64),
 		})
 	}
 	return results
@@ -62,11 +63,12 @@ func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime stri
 	for result.Next() {
 		record := result.Record()
 		results = append(results, queryTrafficResponse{
-			Time:  record.Time().Format(time.RFC3339),
-			Tag:   "",
-			Group: record.ValueByKey("group").(string),
-			Ip:    "",
-			Value: record.ValueByKey("total").(float64),
+			Time:     record.Time().Format(time.RFC3339),
+			Tag:      "",
+			Group:    record.ValueByKey("group").(string),
+			Ip:       "",
+			Download: record.ValueByKey("download").(float64),
+			Upload:   record.ValueByKey("upload").(float64),
 		})
 	}
 	return results
@@ -83,11 +85,12 @@ func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, tag string) []quer
 	for result.Next() {
 		record := result.Record()
 		results = append(results, queryTrafficResponse{
-			Time:  record.Time().Format(time.RFC3339),
-			Tag:   record.ValueByKey("tag").(string),
-			Group: record.ValueByKey("group").(string),
-			Ip:    record.ValueByKey("ip").(string),
-			Value: record.ValueByKey("total").(float64),
+			Time:     record.Time().Format(time.RFC3339),
+			Tag:      record.ValueByKey("tag").(string),
+			Group:    record.ValueByKey("group").(string),
+			Ip:       record.ValueByKey("ip").(string),
+			Download: record.ValueByKey("download").(float64),
+			Upload:   record.ValueByKey("upload").(float64),
 		})
 	}
 	return results
@@ -104,20 +107,22 @@ func QueryTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, group string) []
 	for result.Next() {
 		record := result.Record()
 		results = append(results, queryTrafficResponse{
-			Time:  record.Time().Format(time.RFC3339),
-			Tag:   record.ValueByKey("tag").(string),
-			Group: record.ValueByKey("group").(string),
-			Ip:    record.ValueByKey("ip").(string),
-			Value: record.ValueByKey("total").(float64),
+			Time:     startTime,
+			Tag:      "",
+			Group:    record.ValueByKey("group").(string),
+			Ip:       "",
+			Download: record.ValueByKey("download").(float64),
+			Upload:   record.ValueByKey("upload").(float64),
 		})
 	}
 	return results
 }
 
 type queryTrafficResponse struct {
-	Time  string  `json:"time"`
-	Tag   string  `json:"tag"`
-	Group string  `json:"group"`
-	Ip    string  `json:"ip"`
-	Value float64 `json:"value"`
+	Time     string  `json:"time"`
+	Tag      string  `json:"tag"`
+	Group    string  `json:"group"`
+	Ip       string  `json:"ip"`
+	Download float64 `json:"download"`
+	Upload   float64 `json:"upload"`
 }
