@@ -107,10 +107,10 @@ func QueryTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, group string) []
 	for result.Next() {
 		record := result.Record()
 		results = append(results, queryTrafficResponse{
-			Time:     startTime,
-			Tag:      "",
+			Time:     record.Time().Format(time.RFC3339),
+			Tag:      record.ValueByKey("tag").(string),
 			Group:    record.ValueByKey("group").(string),
-			Ip:       "",
+			Ip:       record.ValueByKey("ip").(string),
 			Download: record.ValueByKey("download").(float64),
 			Upload:   record.ValueByKey("upload").(float64),
 		})
