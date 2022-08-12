@@ -40,7 +40,9 @@ func GetTrafficByTag(c *gin.Context) {
 		configs.InfluxDBConf.AuthToken,
 		configs.InfluxDBConf.Org,
 		configs.InfluxDBConf.Bucket)
-	res := meTrojan.QueryTrafficByTag(i, common.GetMonthFirstDay(), c.Param("tag"))
+	startTime := c.DefaultQuery("start", common.GetMonthFirstDay())
+	endTime := c.DefaultQuery("end", common.GetCurrentDay())
+	res := meTrojan.QueryTrafficByTag(i, startTime, endTime, c.Param("tag"))
 	c.JSON(http.StatusOK, res)
 }
 
@@ -50,6 +52,8 @@ func GetTrafficByGroup(c *gin.Context) {
 		configs.InfluxDBConf.AuthToken,
 		configs.InfluxDBConf.Org,
 		configs.InfluxDBConf.Bucket)
-	res := meTrojan.QueryTrafficByGroup(i, common.GetMonthFirstDay(), c.Param("group"))
+	startTime := c.DefaultQuery("start", common.GetMonthFirstDay())
+	endTime := c.DefaultQuery("end", common.GetCurrentDay())
+	res := meTrojan.QueryTrafficByGroup(i, startTime, endTime, c.Param("group"))
 	c.JSON(http.StatusOK, res)
 }

@@ -61,7 +61,7 @@ export default {
             });
             this.data = tmpdata;
           } else {
-            tmpdata.push(["null", 0]);
+            tmpdata.push(["null", 0, 0, 0]);
             this.data = tmpdata;
           }
         })

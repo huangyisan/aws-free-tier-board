@@ -74,10 +74,10 @@ func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime stri
 	return results
 }
 
-func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, tag string) []queryTrafficResponse {
+func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, stopTime, tag string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByTag, i.GetBucket(), startTime, tag)
+	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByTag, i.GetBucket(), startTime, stopTime, tag)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
@@ -96,10 +96,10 @@ func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, tag string) []quer
 	return results
 }
 
-func QueryTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, group string) []queryTrafficResponse {
+func QueryTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime, group string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByGroup, i.GetBucket(), startTime, group)
+	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByGroup, i.GetBucket(), startTime, stopTime, group)
 	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
