@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/google-chart/GoogleChart.vue'
 import AllTrafficView from '../views/trojanTraffic/AllTrafficView.vue'
-import TrafficByGroup from '../views/trojanTraffic/TrafficByGroup.vue'
+import TrafficByGroup from '../views/trojanTraffic/AllTrafficByGroup.vue'
 
 Vue.use(VueRouter)
 

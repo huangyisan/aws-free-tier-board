@@ -16,12 +16,14 @@ export const chartOptions = {
 
 
 export var genAllTrafficData =  function(item, tmpdata) {
-    tmpdata.push([item.tag, item.value]);
+    let total = item.download + item.upload
+    tmpdata.push([item.tag, item.download, item.upload, total ]);
 }
 
 
 export var genAllTrafficDataByGroup =  function(item, tmpdata) {
-  tmpdata.push([item.group, item.value]);
+    let total = item.download + item.upload
+    tmpdata.push([item.group, item.download, item.upload, total ]);
 }
 
 export var setDatesRange =  function(dates) {

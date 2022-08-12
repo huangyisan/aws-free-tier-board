@@ -54,7 +54,7 @@ export default {
         },
       })
         .then((res) => {
-          let tmpdata = [["Endpoint", "Value"]];
+          let tmpdata = [["Endpoint", "download", "upload", "total"]];
           if (res.data !== null) {
             res.data.forEach((element) => {
               genAllTrafficDataByGroup(element, tmpdata);
