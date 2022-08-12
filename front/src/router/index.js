@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/google-chart/GoogleChart.vue'
-import AllTrafficView from '../views/trojanTraffic/AllTrafficView.vue'
+import AllTraffic from '../views/trojanTraffic/AllTrafficView.vue'
 import TrafficByGroup from '../views/trojanTraffic/AllTrafficByGroup.vue'
+import FilterTraffic from '../views/trojanTraffic/FilterTraffic.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: AllTrafficView,
+    component: AllTraffic,
     // children: [
     //   {
     //     path: '/traffic/group',
@@ -34,6 +35,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: TrafficByGroup
+  },
+  {
+    path: '/traffic/filter',
+    name: 'trafficFilter',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: FilterTraffic
   }
 ]
 

@@ -81,7 +81,12 @@ export default {
   data: () => ({
     trojanTraffic: [
       { title: "All Traffic", icon: "mdi-download", to: "/traffic" },
-      { title: "Traffic By Group", icon: "mdi-download", to: "/traffic/group" },
+      {
+        title: "Group Traffic",
+        icon: "mdi-download-network-outline",
+        to: "/traffic/group",
+      },
+      { title: "Filter Traffic", icon: "mdi-filter", to: "/traffic/filter" },
       // ["All Traffic", "mdi-download"],
       // ["Settings", "mdi-cog-outline"],
     ],

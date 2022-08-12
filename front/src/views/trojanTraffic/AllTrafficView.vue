@@ -20,7 +20,9 @@
           </v-btn>
         </v-col>
       </v-row>
-      <g-chart :type="type" :data="data" :options="options" />
+      <v-row justify="center">
+        <g-chart :type="type" :data="data" :options="options" />
+      </v-row>
     </div>
   </div>
 </template>

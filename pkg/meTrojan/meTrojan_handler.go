@@ -2,7 +2,6 @@ package meTrojan
 
 import (
 	"context"
-	"fmt"
 	"github.com/p4gefau1t/trojan-go/api/service"
 	"io"
 	"time"
@@ -79,7 +78,6 @@ func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, stopTime, tag stri
 	defer i.Close()
 	var results []queryTrafficResponse
 	trafficQuery := meInfluxdb.MakeQuery(common.TrafficByTag, i.GetBucket(), startTime, stopTime, tag)
-	fmt.Println(trafficQuery)
 	result, err := i.QueryRecord(context.Background(), trafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
