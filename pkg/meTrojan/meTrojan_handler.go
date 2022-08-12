@@ -2,6 +2,7 @@ package meTrojan
 
 import (
 	"context"
+	"fmt"
 	"github.com/p4gefau1t/trojan-go/api/service"
 	"io"
 	"time"
@@ -55,8 +56,8 @@ func QueryAllTraffic(i *meInfluxdb.InfluxClient, startTime, stopTime string) []q
 func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.AllTrafficByGroup, i.GetBucket(), startTime, stopTime)
-	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
+	trafficQuery := meInfluxdb.MakeQuery(common.AllTrafficByGroup, i.GetBucket(), startTime, stopTime)
+	result, err := i.QueryRecord(context.Background(), trafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
 	}
@@ -77,8 +78,9 @@ func QueryAllTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime stri
 func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, stopTime, tag string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByTag, i.GetBucket(), startTime, stopTime, tag)
-	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
+	trafficQuery := meInfluxdb.MakeQuery(common.TrafficByTag, i.GetBucket(), startTime, stopTime, tag)
+	fmt.Println(trafficQuery)
+	result, err := i.QueryRecord(context.Background(), trafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
 	}
@@ -99,8 +101,8 @@ func QueryTrafficByTag(i *meInfluxdb.InfluxClient, startTime, stopTime, tag stri
 func QueryTrafficByGroup(i *meInfluxdb.InfluxClient, startTime, stopTime, group string) []queryTrafficResponse {
 	defer i.Close()
 	var results []queryTrafficResponse
-	allTrafficQuery := meInfluxdb.MakeQuery(common.TrafficByGroup, i.GetBucket(), startTime, stopTime, group)
-	result, err := i.QueryRecord(context.Background(), allTrafficQuery)
+	trafficQuery := meInfluxdb.MakeQuery(common.TrafficByGroup, i.GetBucket(), startTime, stopTime, group)
+	result, err := i.QueryRecord(context.Background(), trafficQuery)
 	if err != nil {
 		logger.Failed.Msgf(err.Error())
 	}
